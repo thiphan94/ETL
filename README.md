@@ -23,19 +23,7 @@ Before running the ETL pipeline, make sure you have the following installed:
     cd ETL
     ```
 
-2. Build the Docker image:
-
-    ```bash
-    docker-compose build
-    ```
-
-3. Start the Docker containers:
-
-    ```bash
-    docker-compose up -d
-    ```
-
-4. Create a PostgreSQL database and update the configuration:
+2. Create a PostgreSQL database and update the configuration:
 
     - Open `docker-compose.yml` and update the environment variables for PostgreSQL:
     
@@ -45,13 +33,20 @@ Before running the ETL pipeline, make sure you have the following installed:
           POSTGRES_USER: your_username
           POSTGRES_PASSWORD: your_password
         ```
-
-5. Run the ETL pipeline:
+3. Start the Docker containers (docker-compose setup with PostgreSQL and pgAdmin4):
 
     ```bash
-    docker-compose run etl_pipeline
+    docker-compose up 
     ```
 
+4. In pgAdmin, we need to add a new server using the username and password which we have defined inside the docker file. 
+5. Run etl 
+    ```bash
+    python src/etl.py
+    ```
+
+6. We can check in pgAdmin if the dataset is loaded correctly in PostgreSQL:
+![Alt text](img/pgadmin.png "pgAdmin")
 ## Project Structure
 
 - `data/`: Contains the input CSV file.

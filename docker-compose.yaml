@@ -1,7 +1,7 @@
-version: "3"
+version: "3.8"
 services:
   postgres:
-    image: "postgres:latest"
+    image: "postgres"
     environment:
       POSTGRES_DB: insurance
       POSTGRES_USER: postgres
@@ -17,7 +17,7 @@ services:
     depends_on:
       - postgres
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:80"

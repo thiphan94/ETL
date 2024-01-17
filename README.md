@@ -61,9 +61,23 @@ Before running the ETL pipeline, make sure you have the following installed:
 
 ## Usage
 
-- Add your insurance data CSV file to the `data/` directory.
+- Download the [Health Insurance Cross Sell Prediction dataset](https://www.kaggle.com/datasets/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv) from Kaggle.
+- Place the downloaded CSV file into the `data/` directory.
 - Adjust PySpark ETL scripts in the `src/` directory based on your specific data transformations.
 - Run the ETL pipeline using Docker Compose.
+
+## Dataset
+
+The dataset used in this project is the [Health Insurance Cross Sell Prediction](https://www.kaggle.com/datasets/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv) dataset available on Kaggle. 
+
+- **File**: `train.csv`
+- **Columns**: 
+  - `id`: Unique identifier for each customer
+  - `gender`: Gender of the customer
+  - `age`: Age of the customer
+  - `driving_license`: Whether the customer has a driving license (1 for Yes, 0 for No)
+  - ... (Include other relevant columns)
+- [More information about the dataset](https://www.kaggle.com/datasets/anmolkumar/health-insurance-cross-sell-prediction/data)
 
 ## Notes
 

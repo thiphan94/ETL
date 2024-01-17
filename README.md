@@ -40,13 +40,7 @@ Before running the ETL pipeline, make sure you have the following installed:
     ```
 
 4. In pgAdmin, we need to add a new server using the username and password which we have defined inside the docker file. 
-5. Run etl 
-    ```bash
-    python src/etl.py
-    ```
 
-6. We can check in pgAdmin if the dataset is loaded correctly in PostgreSQL:
-![Alt text](img/pgadmin.png "pgAdmin")
 ## Project Structure
 
 - `data/`: Contains the input CSV file.
@@ -58,9 +52,12 @@ Before running the ETL pipeline, make sure you have the following installed:
 
 - Download the [Health Insurance Cross Sell Prediction dataset](https://www.kaggle.com/datasets/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv) from Kaggle.
 - Place the downloaded CSV file into the `data/` directory.
-- Adjust PySpark ETL scripts in the `src/` directory based on your specific data transformations.
-- Run the ETL pipeline using Docker Compose.
-
+- Run etl 
+    ```bash
+    python src/etl.py
+    ```
+- We can check in pgAdmin if the dataset is loaded correctly in PostgreSQL:
+![Alt text](img/pgadmin.png "pgAdmin")
 ## Dataset
 
 The dataset used in this project is the [Health Insurance Cross Sell Prediction](https://www.kaggle.com/datasets/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv) dataset available on Kaggle. 

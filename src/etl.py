@@ -1,44 +1,47 @@
-import pyspark
-from pyspark.sql import SparkSession
-from pyspark.sql.types import StructField, StructType, StringType, LongType,FloatType, TimestampType, ShortType, DateType, BooleanType
+import psycopg2
+from constant import initialize_Spark, INSURANCE_COLS
+from extract import loadDFWithSchema
+from transform import rename_cols, clean_data
+from load import create_table, write_postgresql, get_insterted_data
 
-#create SparkSession
-def initialize_Spark():
+conn = psycopg2.connect(
+    host="localhost", database="insurance", user="postgres", password="postgres"
+)
 
-    spark = SparkSession.builder \
-        .master("local[*]") \
-        .appName("first etl") \
-        .getOrCreate()
+print("Connection to PostgreSQL created", "\n")
 
-    return spark
 
-#Reading CSV without using Schema
-def loadDFWithoutSchema(spark):
+cur = conn.cursor()
 
-    df = spark.read.format("csv").option("header", "true").load("../data/london.csv")
+spark = initialize_Spark()
 
-    return df
 
-#Reading CSV using user-defined Schema
-def loadDFWithSchema(spark):
+# Extract
+df = loadDFWithSchema(spark)
 
-    schema = StructType([
-        StructField("timestamp", DateType(), True),
-        StructField("cnt", LongType(), True),
-        StructField("t1", FloatType(), True),
-        StructField("t2", FloatType(), True),
-        StructField("hum", FloatType(), True),
-        StructField("wind_speed", FloatType(), True),
-        StructField("weather_code", LongType(), True),
-        StructField("is_holiday", BooleanType(), True),
-        StructField("season", LongType(), True)
-    ])
+# Transformation
+df_renamed = rename_cols(df, INSURANCE_COLS)
+df_final = clean_data(df_renamed)
 
-    df = spark \
-        .read \
-        .format("csv") \
-        .schema(schema)         \
-        .option("header", "true") \
-        .load("../data/london.csv")
+# Load data
+create_table(cur)
 
-    return df
+insert_query, insurance_seq = write_postgresql(df_final)
+cur.execute(insert_query, insurance_seq)
+
+print("Data inserted into PostgreSQL", "\n")
+
+get_insterted_data(cur)
+
+cur.close()
+
+print("Commiting changes to database", "\n")
+# make sure that your changes are shown in the db
+conn.commit()
+
+print("Closing connection", "\n")
+
+# close the connection
+conn.close()
+
+print("Done!", "\n")

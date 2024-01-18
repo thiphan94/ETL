@@ -76,6 +76,9 @@ The dataset used in this project is the [Health Insurance Cross Sell Prediction]
 - Make sure to customize the PostgreSQL database configuration in `docker-compose.yml`.
 - Modify PySpark scripts to match your data schema and transformation requirements.
 
+## To do
+Make DAG with Airflow
+Finish Power BI Dashboard
 ## Credits
 
 - [PySpark Documentation](https://spark.apache.org/docs/latest/sql-getting-started.html)
